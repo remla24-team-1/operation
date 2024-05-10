@@ -1,0 +1,29 @@
+# docker-compose.yml
+
+services: 
+  app-service: 
+    image: nginx:latest
+    ports: 
+    - "8080:80"
+    volumes: 
+      - ./html:/usr/share/nginx/html
+
+  model-service:
+    build: 
+    context: ./../model-training/docker
+    dockerfile: dockerfile
+    ports: 
+      - "5000:5000"
+    environment: 
+      # - config=./../model-training/config.yml
+    volumes: 
+      - ./../model-training/models:/app/models
+  proxy: 
+    image: nginx:latest
+    ports: 
+      - "80:80"
+    volumes:
+      - ./proxy/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - app-service
+      - model-service
