@@ -15,6 +15,13 @@ This Organization, designed my team 1 of the Remla course in Tu Delft, is made t
 
 ## List of Project Repositories
 
+https://github.com/remla24-team-1/operation
+https://github.com/remla24-team-1/model-training
+https://github.com/remla24-team-1/lib-version
+https://github.com/remla24-team-1/model-service
+https://github.com/remla24-team-1/lib-ml
+https://github.com/remla24-team-1/app
+
 ## Assignments Progress Log
 
 ### Assignment 1: Configuration Management
@@ -29,4 +36,7 @@ Seperated out the original Kaggle notebook into different subsections of ML trai
 
 
 ### Assignment 2
+
+
+
 
