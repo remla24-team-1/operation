@@ -10,7 +10,7 @@ services:
 
   model-service:
     build: 
-    context: ./../model-training/docker
+    context: ./../model-training/Dockerfile
     dockerfile: dockerfile
     ports: 
       - "5000:5000"
