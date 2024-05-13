@@ -38,10 +38,15 @@ Seperated out the original Kaggle notebook into different subsections of ML trai
 ### Assignment 2
 
 > app:
+
 > lib-ml:
+
 > lib-version:
+
 > model-service:
+
 > model-training:
+
 > operation: This is the central repo that contains all the information for running the application and operating the cluster. As of now, in order to run the repository one should have cloned all the different repositories and then within this repository/directory run :
 ```docker compose build```
 followed by
