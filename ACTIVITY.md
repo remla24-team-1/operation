@@ -23,7 +23,7 @@ Approved PR: https://github.com/remla24-team-1/remla/pull/4
 
 -- Sem: --\
 Created PR: https://github.com/remla24-team-1/app/pull/5 \
-Approved PR: https://github.com/remla24-team-1/model-service/pull/2 \
+Approved PR: https://github.com/remla24-team-1/model-service/pull/2 
 
 -- Flavio: --\
 Created PR: 
