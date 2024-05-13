@@ -26,8 +26,9 @@ Created PR: https://github.com/remla24-team-1/app/pull/5 \
 Approved PR: https://github.com/remla24-team-1/model-service/pull/2 
 
 -- Flavio: --\
-Created PR: 
-Approved PR: 
+Created PR: https://github.com/remla24-team-1/operation/pull/3
+Approved PR: https://github.com/remla24-team-1/app/pull/4
+             https://github.com/remla24-team-1/lib-version/pull/1
 
 -- Erik: --\
 Created PR: https://github.com/remla24-team-1/model-service/pull/2 \
