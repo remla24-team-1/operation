@@ -35,5 +35,5 @@ Approved PR: https://github.com/remla24-team-1/app/pull/5
 
 -- Fin: --\
 Created PR: https://github.com/remla24-team-1/lib-ml/pull/1 \
-Approved PR: https://github.com/remla24-team-1/operation/pull/3
+Approved PR: https://github.com/remla24-team-1/operation/pull/3 \
 
