@@ -4,9 +4,11 @@ services:
   app-service: 
     image: nginx:latest
     ports: 
-    - "8080:80"
+    - "8080:5000"
     volumes: 
-      - ./html:/usr/share/nginx/html
+      # - ./html:/usr/share/nginx/html
+      - ../app/app-service:/app/app-service
+      - ../app/app-frontend:/app/app-frontend
 
   model-service:
     build: 
