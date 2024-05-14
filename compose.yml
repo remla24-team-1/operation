@@ -11,18 +11,17 @@ services:
       - webnet
 
   model-service:
-    build:
-      context: ../model-service
-      dockerfile: Dockerfile
+    #build:
+    #  context: ../model-service/
+    #  dockerfile: Dockerfile
+    image: ghcr.io/remla24-team-1/model-service:latest
     networks:
       - webnet
     expose:
       - "8081"  # Makes port 8081 available to linked services but not to the outside world
 
   app-service:
-    build:
-      context: ../app
-      dockerfile: Dockerfile
+    image: ghcr.io/remla24-team-1/app:latest
     networks:
       - webnet
     ports:
