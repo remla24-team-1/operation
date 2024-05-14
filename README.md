@@ -2,7 +2,6 @@ This Organization, designed my team 1 of the Remla course in Tu Delft, is made t
 
 ## High-level Architecture
 
-
 ## How to start the Application
 
 ### Parameters
@@ -47,10 +46,19 @@ Seperated out the original Kaggle notebook into different subsections of ML trai
 
 > model-training:
 
-> operation: This is the central repo that contains all the information for running the application and operating the cluster. As of now, in order to run the repository one should have cloned all the different repositories and then within this repository/directory run :
-```docker compose build```
-followed by
-```docker compose up```
+> operation: This is the central repo that contains all the information for running the application and operating the cluster. To run the repository with the latest container versions, run:
+```
+git clone git@github.com:remla24-team-1/operation.git
+cd operation
+```
+And finally
+```
+docker compose up
+```
+to collect and build the application.
+
+# Usage
+The service is served through a proxy, at ```localhost:8080``` and ```localhost:80```. After starting the container, go to either of these pages in your browser of choice to test out the service.
 
 
 
