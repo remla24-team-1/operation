@@ -1,6 +1,5 @@
 Vagrant.configure("2") do |config|
 
-
   CONTROLLER_CPUS = 2
   CONTROLLER_MEMORY = 2048
 
@@ -22,18 +21,16 @@ Vagrant.configure("2") do |config|
     end
     controller.vm.network "private_network", ip: "192.168.56.#{STARTING_IP}"
   
-    controller.vm.provision "ansible" do |ansible|
-    
-      ansible.playbook = "provision.yml"
-      ansible.groups = {
-        "node" => [],
-        "controllers" => ["controller"]
-      }
-      ansible.extra_vars = {
-        "controller_ip" => "192.168.56.#{STARTING_IP}"
-      }
-    end
-
+    #controller.vm.provision "ansible" do |ansible|
+    #  ansible.groups = {
+    #    "node" => [],
+    #    "controllers" => ["controller"]
+    #  }
+    #  ansible.extra_vars = {
+    #    "controller_ip" => "192.168.56.#{STARTING_IP}"
+    #  }
+    #  ansible.playbook = "provision.yml"
+    #end
   
   end
   
@@ -51,18 +48,29 @@ Vagrant.configure("2") do |config|
       node.vm.network "private_network", ip: node_ip
 
       # ANSIBLE - NODE SETUP AND DYNAMIC INVENTORY GENERATION
-      node.vm.provision "ansible" do |ansible|
-        ansible.playbook = "provision.yml"
-        ansible.groups = {
-          "node" => ["node#{i}"]
-        }
-        ansible.extra_vars = {
-          "node_ip" => node_ip
-        }
-      end
+      #node.vm.provision "ansible" do |ansible|
+      #  
+      #  ansible.groups = {
+      #    "node" => ["node#{i}"]
+      #  }
+      #  ansible.extra_vars = {
+      #    "node_ip" => node_ip
+      #  }
+      #  ansible.playbook = "provision.yml"
+      #end
 
 
     end
+  end
+
+  nodes = (1..NUM_NODES).map { |i| "node#{i}" }
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.groups = {
+      "nodes" => nodes,
+      "controller" => ["controller"]
+    }
+    ansible.playbook = "provision.yml"
   end
 
 end 

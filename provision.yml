@@ -4,3 +4,13 @@
    tasks:
      - name: Test Connectivity
        ping:
+
+ - hosts: nodes
+   become: true
+   roles:
+    - nodes
+ 
+ - hosts: controller
+   become: yes
+   roles:
+    - controller
