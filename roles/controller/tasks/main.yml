@@ -1,0 +1,3 @@
+---
+- name: Test different than node
+  command: touch /home/vagrant/test

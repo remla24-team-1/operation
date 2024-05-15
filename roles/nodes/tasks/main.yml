@@ -1,0 +1,3 @@
+---
+- name: Test initialization differnet than controller
+  command: touch /home/vagrant/IAMNODE
