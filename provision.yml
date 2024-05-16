@@ -1,20 +1,30 @@
 ---
- - hosts: all
-   become: yes
-   tasks:
-     - name: Test Connectivity
-       ping:
+- hosts: all
+  become: yes
+  tasks:
+    - name: Test Connectivity
+      ping:
 
- - hosts: nodes
-   become: true
-   roles:
-    - nodes
+- hosts: all
+  become: yes
+  roles:
+  - common
+
+- hosts: nodes
+  become: true
+  roles:
+   - nodes
  
- - hosts: controller
-   become: yes
-   roles:
-    - controller
- - hosts: all
-   become: yes
-   roles:
-    - common
+- hosts: controller
+  become: yes
+  roles:
+   - controller
+
+
+
+  handlers:
+    - name: Restart Docker
+      systemd:
+        name: docker
+        state: restarted
+        enabled: yes
