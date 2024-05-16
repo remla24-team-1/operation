@@ -4,7 +4,7 @@ Vagrant.configure("2") do |config|
   CONTROLLER_MEMORY = 2048
 
   NODES_CPUS = 2
-  NODES_MEMORY = 1024
+  NODES_MEMORY = 2048
 
   NUM_NODES = 1
 
@@ -71,5 +71,13 @@ Vagrant.configure("2") do |config|
     }
     ansible.playbook = "provision.yml"
   end
+
+  #config.vm.provision "ansible" do |ansible|
+  #  ansible.groups = {
+  #    "nodes" => nodes,
+  #    "controller" => ["controller"]
+  #  }
+  #  ansible.playbook = "join_cluster.yml"
+  #end
 
 end 

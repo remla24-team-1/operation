@@ -1,3 +1,6 @@
 ---
-- name: Test initialization differnet than controller
-  command: touch /home/vagrant/IAMNODE
+#- name: Test initialization differnet than controller
+#  command: touch /home/vagrant/IAMNODE
+
+#- name: Join the cluster.
+#  shell: "{{ join_command_output.stdout }}"

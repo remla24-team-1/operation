@@ -8,6 +8,8 @@
     - ca-certificates
     - gpg
 
+- name: Disable swap for kubelet
+  command: swapoff -a
 
 # DOCKER STUFF
 - name: Update apt package index
@@ -123,9 +125,9 @@
 - name: Download and install k3d
   shell: curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 
-
+# -f allows it to run even when reprovisioning. Else it stops as it cannot find the file. Gotta be a better way surely
 - name: Remove misconfigured containerd file
-  shell: rm /etc/containerd/config.toml
+  shell: rm -f /etc/containerd/config.toml
 
 - name: Restart containerd
   shell: systemctl restart containerd

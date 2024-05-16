@@ -1,3 +1,33 @@
 ---
 - name: Test different than node
   command: touch /home/vagrant/IAMCONTROLLER
+
+- name: Start the kubeadm initialization
+  command: kubeadm init --control-plane-endpoint=192.168.56.3
+  args:
+    creates: /etc/kubernetes/admin.conf
+
+- name: Change permissions of admin.conf.
+  command: chmod 777 /etc/kubernetes/admin.conf
+
+- name: make .kube folder
+  command: mkdir -p "~/.kube"
+  become_user: "vagrant"
+# -n option should be changed to a makes file -> it is depricated behaviour ... 
+- name: Copy admin kubeconfig file
+  command: cp -i -n /etc/kubernetes/admin.conf ~/.kube/config
+  become_user: "vagrant"
+
+- name: Deploy Calico network
+  command: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+  become_user: "vagrant"
+
+- name: Export the kubeadm join command for nodes
+  command: kubeadm token create --print-join-command
+  register: join_command_output
+
+#- name: EXPORT
+#  copy:
+#    contents: "{{join_command_output.stdout}}"
+#    dest: ~/Desktop/test.txt
+#  delegate_to: localhost
