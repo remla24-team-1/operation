@@ -14,3 +14,7 @@
    become: yes
    roles:
     - controller
+ - hosts: all
+   become: yes
+   roles:
+    - common

@@ -1,5 +1,36 @@
 ---
+# https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+- name: Install packages 
+  apt:
+    pkg:
+    - curl
+    - apt-transport-https
+    - ca-certificates
+    - gpg
+
+- name: Download Kubernetes signing key
+  shell: curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+  args:
+    creates: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+# Shell allows for pipes. Not best practice, but should work temporarily
+- name: Add kuberenetes apt repository
+  shell: echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+
 - name: Update, Upgrade apt
   apt:
     update_cache: yes
     upgrade: dist
+
+- name: Install kubelet, kubeadmin, kubecontroller
+  apt:
+    pkg:
+    - kubelet
+    - kubeadm
+    - kubectl
+
+
+- name: Download and install k3d
+  shell: curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+

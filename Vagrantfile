@@ -6,10 +6,9 @@ Vagrant.configure("2") do |config|
   NODES_CPUS = 2
   NODES_MEMORY = 1024
 
-  NUM_NODES = 2
+  NUM_NODES = 1
 
   STARTING_IP = 3
-
 
   # Define the controller
   config.vm.define "controller", primary: true do |controller|
