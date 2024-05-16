@@ -60,5 +60,33 @@ to collect and build the application.
 # Usage
 The service is served through a proxy, at ```localhost:8080``` and ```localhost:80```. After starting the container, go to either of these pages in your browser of choice to test out the service.
 
+# VAGRANT - ANSIBLE - KUBERNETES
+## Current run instructions
+Run with ```vagrant up``` in main directory. You may want to register your public ssh key if you have not done so already for Ansible. (Not 100% sure if you have to)
+
+## Vagrant structure
+Check the vagrant-file. 
+Basics:
+* controller built and added to controller group in ansible
+* nodes built (node{i}) and added to nodes group
+* Everything is configurable
+* Dynamic Ansible inventory is used rather than static
+* Provisions using provision.yml
+* IPs are automatically allocated as a private network within VirtualBox - 192.168.56.3 for controller. One address later for every node (i.e. 192.168.56.4, 5 etc).
+* All nodes can reach each other freely over this network.
+
+## Ansible structure
+* Tasks in ```roles/``` are performed according to roles
+* Order is common, controller, nodes
+* Common tasks includes downloading and installing containerd, docker, kubectl, kubeadm, kubelet and starting these services
+* Controller / Nodes tasks are to be implemented
+
+## Kubernetes status
+TODO
+* Run kubeadm init for controller with correct CIDR
+* Initialize kubelet properly for all nodes
+* Connect nodes to controller with kubeadm/kubelet
+* Start a kuberenetes client on the controller, minikube or k3d / similar
+
 
 
