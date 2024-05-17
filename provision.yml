@@ -12,10 +12,10 @@
    - nodes
   
 # Same but for the controller 
-- hosts: controller
+- hosts: controllers
   become: yes
   roles:
-   - controller
+   - controllers
 
 
 #- name: JOIN controller command

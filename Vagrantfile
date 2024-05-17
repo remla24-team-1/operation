@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
       v.memory  = CONTROLLER_MEMORY
     end
     controller.vm.network "private_network", ip: "192.168.56.#{STARTING_IP}"
-  
+    controller.vm.network "forwarded_port", guest: 6443, host: 6443
     #controller.vm.provision "ansible" do |ansible|
     #  ansible.groups = {
     #    "node" => [],
@@ -46,6 +46,7 @@ Vagrant.configure("2") do |config|
       node_ip = "192.168.56.#{STARTING_IP + i}"
       node.vm.network "private_network", ip: node_ip
 
+
       # ANSIBLE - NODE SETUP AND DYNAMIC INVENTORY GENERATION
       #node.vm.provision "ansible" do |ansible|
       #  
@@ -67,7 +68,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "ansible" do |ansible|
     ansible.groups = {
       "nodes" => nodes,
-      "controller" => ["controller"]
+      "controllers" => ["controller"]
     }
     ansible.playbook = "provision.yml"
   end

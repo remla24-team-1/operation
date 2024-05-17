@@ -79,14 +79,15 @@ Basics:
 * Tasks in ```roles/``` are performed according to roles
 * Order is common, controller, nodes
 * Common tasks includes downloading and installing containerd, docker, kubectl, kubeadm, kubelet and starting these services
-* Controller / Nodes tasks are to be implemented
 
 ## Kubernetes status
-TODO
-* Run kubeadm init for controller with correct CIDR
-* Initialize kubelet properly for all nodes
-* Connect nodes to controller with kubeadm/kubelet
-* Start a kuberenetes client on the controller, minikube or k3d / similar
+* Initializes on controller through     ```kubeadm init [*PARAMS]```
+* Advertises on ```192.168.56.3```, the network where all VMs can reach each other
+* Deploys Calico network on controller
+* Saves ```kubeadm token create --print-join-command``` output to /tmp/joincommand.txt on host running the command as the user running vagrant
+* Loads file containing command using ```slurp``` and runs the command on all nodes
 
+This should be incredibly scalable for the amount of nodes. Not as clear for adding more controllers in this framework.
 
-
+## Upcoming
+* Initialize minikube or similar on host. Currently k3d gets installed automaticaly for all hosts, but has not yet been tried.

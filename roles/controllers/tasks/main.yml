@@ -26,8 +26,20 @@
   command: kubeadm token create --print-join-command
   register: join_command_output
 
-#- name: EXPORT
-#  copy:
-#    contents: "{{join_command_output.stdout}}"
-#    dest: ~/Desktop/test.txt
-#  delegate_to: localhost
+#- debug:
+#    var: join_command_output.stdout
+
+- name: Get localhost user
+  set_fact:
+    playbook_user: "{{ lookup('env', 'USER') }}"
+
+- debug:
+    var: playbook_user
+
+- name: Write command to file
+  copy:
+    content: "{{ join_command_output.stdout }}"
+    dest: /tmp/joincommand.txt
+  #become: yes
+  delegate_to: localhost
+  become_user: "{{ playbook_user }}"
