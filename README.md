@@ -105,7 +105,7 @@ This should be incredibly scalable for the amount of nodes. Not as clear for add
 
 ## Running the project
 
-- Make sure you have installed kubectl, minikube, docker desktop, and helm.
+- Make sure you have installed kubectl, minikube, docker desktop, and helm. Also make sure ingress is enabled.
 - In docker desktop, go to settings and enable kubernetes.
 - Make sure docker desktop is open during the following steps.
 - Create a cluster by running: `minikube start`
