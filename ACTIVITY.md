@@ -39,3 +39,20 @@ Created PR: https://github.com/remla24-team-1/lib-ml/pull/1 \
 Approved PR: https://github.com/remla24-team-1/operation/pull/3 \
 
 
+# A3
+
+-- Sem: --\
+Created PR: https://github.com/remla24-team-1/operation/pull/8 \
+Approved PR: https://github.com/remla24-team-1/operation/pull/7
+
+-- Flavio: --\
+Created PR: \
+Approved PR: 
+
+-- Erik: --\
+Created PR:  \
+Approved PR: 
+
+-- Fin: --\
+Created PR:  \
+Approved PR:  \
