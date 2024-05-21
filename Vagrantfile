@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
   NODES_CPUS = 2
   NODES_MEMORY = 2048
 
-  NUM_NODES = 1
+  NUM_NODES = 2
 
   STARTING_IP = 3
 
@@ -18,8 +18,11 @@ Vagrant.configure("2") do |config|
       v.cpus    = CONTROLLER_CPUS
       v.memory  = CONTROLLER_MEMORY
     end
-    controller.vm.network "private_network", ip: "192.168.56.#{STARTING_IP}"
-    controller.vm.network "forwarded_port", guest: 6443, host: 6443
+    controller.vm.network "private_network", ip: "192.168.56.#{STARTING_IP}", virtualbox__intnet: true
+
+    controller.vm.provider "virtualbox" do |vb|
+      vb.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]   
+    end
     #controller.vm.provision "ansible" do |ansible|
     #  ansible.groups = {
     #    "node" => [],
@@ -44,8 +47,10 @@ Vagrant.configure("2") do |config|
         v.memory = NODES_MEMORY
       end
       node_ip = "192.168.56.#{STARTING_IP + i}"
-      node.vm.network "private_network", ip: node_ip
-
+      node.vm.network "private_network", ip: node_ip, virtualbox__intnet: true
+      node.vm.provider "virtualbox" do |vb|
+        vb.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]   
+      end
 
       # ANSIBLE - NODE SETUP AND DYNAMIC INVENTORY GENERATION
       #node.vm.provision "ansible" do |ansible|
@@ -66,6 +71,7 @@ Vagrant.configure("2") do |config|
   nodes = (1..NUM_NODES).map { |i| "node#{i}" }
 
   config.vm.provision "ansible" do |ansible|
+    ansible.compatibility_mode="2.0"
     ansible.groups = {
       "nodes" => nodes,
       "controllers" => ["controller"]
