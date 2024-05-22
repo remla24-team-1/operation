@@ -1,4 +1,14 @@
 ---
+
+- name: Open ports
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: "{{ item }}"
+    jump: ACCEPT
+  with_items:
+    - "10250"
+
 # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 - name: Install packages 
   apt:
@@ -53,18 +63,18 @@
     path: /etc/docker
     state: directory
 
-- name: Configure Docker daemon
-  copy:
-    content: |
-      {
-        "exec-opts": ["native.cgroupdriver=systemd"],
-        "log-driver": "json-file",
-        "log-opts": {
-          "max-size": "100m"
-        },
-        "storage-driver": "overlay2"
-      }
-    dest: /etc/docker/daemon.json
+#- name: Configure Docker daemon
+#  copy:
+#    content: |
+#      {
+#        "exec-opts": ["native.cgroupdriver=systemd"],
+#        "log-driver": "json-file",
+#        "log-opts": {
+#          "max-size": "100m"
+#        },
+#        "storage-driver": "overlay2"
+#      }
+#    dest: /etc/docker/daemon.json
 
 - name: Create docker service directory
   file:

@@ -1,4 +1,19 @@
 ---
+
+- name: Open ports controller
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: "{{ item }}"
+    jump: ACCEPT
+  with_items:
+    - "6443"
+    - "2379"
+    - "2380"
+    - "10259"
+    - "10257"
+  
+
 - name: Test different than node
   command: touch /home/vagrant/IAMCONTROLLER
 
