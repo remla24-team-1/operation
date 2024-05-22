@@ -50,8 +50,8 @@ Created PR: https://github.com/remla24-team-1/app/pull/8 \
 Approved PR: https://github.com/remla24-team-1/operation/pull/8
 
 -- Erik: --\
-Created PR:  \
-Approved PR: 
+Created PR:  https://github.com/remla24-team-1/operation/pull/7 https://github.com/remla24-team-1/operation/pull/9\
+Approved PR: https://github.com/remla24-team-1/app/pull/8
 
 -- Fin: --\
 Created PR:  \
