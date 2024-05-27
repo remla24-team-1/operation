@@ -1,24 +1,10 @@
 ---
 
-- name: Open ports controller
-  iptables:
-    chain: INPUT
-    protocol: tcp
-    destination_port: "{{ item }}"
-    jump: ACCEPT
-  with_items:
-    - "6443"
-    - "2379"
-    - "2380"
-    - "10259"
-    - "10257"
-  
-
 - name: Test different than node
   command: touch /home/vagrant/IAMCONTROLLER
 
 - name: Start the kubeadm initialization
-  command: kubeadm init --control-plane-endpoint=192.168.56.3
+  command: kubeadm init --apiserver-advertise-address=192.168.56.3
   args:
     creates: /etc/kubernetes/admin.conf
 

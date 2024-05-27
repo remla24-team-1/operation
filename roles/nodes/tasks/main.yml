@@ -1,17 +1,6 @@
 ---
 #- name: Test initialization differnet than controller
-#  command: touch /home/vagrant/IAMNODE- name: Get the user running the playbook
-
-- name: Open ports nodes
-  iptables:
-    chain: INPUT
-    protocol: tcp
-    destination_port: "{{ item }}"
-    jump: ACCEPT
-  with_items:
-    - "10256"
-    - "30000:32767"
-  
+#  command: touch /home/vagrant/IAMNODE- name: Get the user running the playbook  
 
 - name: Get localhost user
   set_fact:

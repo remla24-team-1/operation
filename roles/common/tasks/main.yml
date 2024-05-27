@@ -9,6 +9,31 @@
   with_items:
     - "10250"
 
+- name: Open ports nodes
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: "{{ item }}"
+    jump: ACCEPT
+  with_items:
+    - "10256"
+    - "30000:32767"
+  
+- name: Open ports controller
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: "{{ item }}"
+    jump: ACCEPT
+  with_items:
+    - "6443"
+    - "2379"
+    - "2380"
+    - "10259"
+    - "10257"
+
+
+
 # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 - name: Install packages 
   apt:
@@ -36,6 +61,26 @@
       - lsb-release
     state: present
 
+#- name: 1
+#  shell: "install -m 0755 -d /etc/apt/keyrings"
+
+#- name: 2
+#  shell: "curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc"
+
+#- name: 3
+#  shell: "chmod a+r /etc/apt/keyrings/docker.asc"
+
+#- name: 4
+#  shell: '"echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null"'
+
+#- name: 5
+#  shell: "apt-get update"
+
+#- name: 6
+#  shell: "apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin"
+  
+
+
 - name: Add Docker’s official GPG key
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
@@ -56,6 +101,8 @@
       - docker-ce
       - docker-ce-cli
       - containerd.io
+      - docker-buildx-plugin 
+      - docker-compose-plugin
     state: present
 
 - name: Create /etc/docker directory
@@ -81,23 +128,23 @@
     path: /etc/systemd/system/docker.service.d
     state: directory
 
-- name: Restart Docker
-  systemd:
-    name: docker
-    enabled: yes
-    daemon_reload: yes
-    state: restarted
+#- name: Restart Docker
+#  systemd:
+#    name: docker
+#    enabled: yes
+#    daemon_reload: yes
+#    state: restarted
 
-- name: Add user to the docker group
-  user:
-    name: "{{ ansible_user }}"
-    groups: docker
-    append: yes
+#- name: Add user to the docker group
+#  user:
+#    name: "{{ ansible_user }}"
+#    groups: docker
+#    append: yes
 
-- name: Enable Docker service
-  systemd:
-    name: docker
-    enabled: yes
+#- name: Enable Docker service
+#  systemd:
+#    name: docker
+#    enabled: yes
 
 # END OF DOCKER STUFF
 
@@ -132,8 +179,8 @@
     enabled: yes
     state: started
 
-- name: Download and install k3d
-  shell: curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+#- name: Download and install k3d
+#  shell: curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 
 # -f allows it to run even when reprovisioning. Else it stops as it cannot find the file. Gotta be a better way surely
 - name: Remove misconfigured containerd file

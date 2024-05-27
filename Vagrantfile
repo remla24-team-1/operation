@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
   NODES_CPUS = 2
   NODES_MEMORY = 2048
 
-  NUM_NODES = 2
+  NUM_NODES = 1
 
   STARTING_IP = 3
 
