@@ -69,7 +69,7 @@ Approved PR:
 
 -- Erik: --\
 Created PR:  https://github.com/remla24-team-1/model-training/pull/11 \
-Approved PR: 
+Approved PR: https://github.com/remla24-team-1/model-training/pull/13
 
 -- Fin: --\
 Created PR:  \
