@@ -56,3 +56,21 @@ Approved PR: https://github.com/remla24-team-1/app/pull/8
 -- Fin: --\
 Created PR:  \
 Approved PR:  https://github.com/remla24-team-1/operation/pull/9
+
+# A4
+
+-- Sem: --\
+Created PR: \
+Approved PR:
+
+-- Flavio: --\
+Created PR: \
+Approved PR:
+
+-- Erik: --\
+Created PR:  https://github.com/remla24-team-1/model-training/pull/11 \
+Approved PR: 
+
+-- Fin: --\
+Created PR:  \
+Approved PR: 
