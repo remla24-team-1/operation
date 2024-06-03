@@ -101,14 +101,43 @@ This should be incredibly scalable for the amount of nodes. Not as clear for add
 
 ## Upcoming
 
-- Initialize minikube or similar on host. Currently k3d gets installed automaticaly for all hosts, but has not yet been tried.
+- Initialize minikube or similar on host.
 
 ## Running the project
 
-- Make sure you have installed kubectl, minikube, docker desktop, and helm. Also make sure ingress is enabled.
+- Make sure you have installed kubectl, minikube, docker desktop, and helm.
 - In docker desktop, go to settings and enable kubernetes.
 - Make sure docker desktop is open during the following steps.
 - Create a cluster by running: `minikube start`
+- Start the minikube ingress through `minikube addons enable ingress`
 - Install the project by running: `helm install url-phishing-checker helm-chart`
 - Make the project available on localhost by running: `minikube tunnel`
 - When you're done, uninstall the project by running the following command: `helm uninstall url-phishing-checker`
+
+## ISTIO SERVICE MESH
+These are full run instructions for running the minikube cluster and to enable the istio service mesh.
+
+- Make sure kubectl, minikube, docker-desktop and helm are installed.
+- Make sure that you are logged into docker-desktop. This might require you to initialise your pass, through for example gpg keys, see the [Docker documentation](https://docs.docker.com/desktop/get-started/#credentials-management-for-linux-users).
+- Enable kubernetes in docker desktop.
+- Create a cluter by running `minikube start`
+- (Get an overview of the deployment through the minikube dashboard by running `minikube dashboard`.) 
+- Download a istio binary that fits your system from [the Istio github releases page](https://github.com/istio/istio/releases/tag/1.22.0)
+- Unpack the downloaded binary with `tar -xvzf {ISTIO RELEASE}.tar`. (Optionally: Move the unpacked folder to another location. We will assume that the unpacked folder is located at `~/istio` from now on)
+- Optional: Add the istio/bin folder to your path. This can be done by running `EXPORT PATH=$PATH:~/istio/bin` after moving the unpacked folder.
+- Verify that istio has been added to your path by running `istioctl version`. This should return the version.
+- Install istio to the cluster by running  `istioctl install`.
+- Install Prometheus, Jaeger and Kiali by running:
+```
+kubectl apply -f ~/istio/samples/addons/prometheus.yaml
+kubectl apply -f ~/istio/samples/addons/jaeger.yaml
+kubectl apply -f ~/istio/samples/addons/kiali.yaml
+```
+The prometheus and kiali dashboards are available through running `istioctl dashboard prometheus` and/or `istioctl dashboard kiali`
+- Label the namespace for Istio injection with `kubectl label namespace default istio-injection=enabled`
+- Deploy the helm chart with `helm install url-phishing-checker helm-chart`. (If the helm chart has already been deployed on your minikube cluster, the pods can be reloaded to also initialize the Istio sidecars by running `helm upgrade url-phishing-checker helm-chart --recreate-pods`)
+- Apply the gateway by running `kubectl apply -f gateway.yaml`.
+- Apply the virtual service by running `kubectl apply -f VirtualService.yaml`.
+- Open a tunnel for the istio-ingressway to bind to by running `minikube tunnel`. While the command is active, the service will be accessible at a specific address.
+- (Get the external IP that the service is deployed at by running `kubectl get svc istio-ingressgateway -n istio-system`. This should be 127.0.0.1.)
+- Test the service by going to the url, likely [localhost](localhost).
