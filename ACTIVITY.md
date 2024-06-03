@@ -54,7 +54,7 @@ Created PR:  https://github.com/remla24-team-1/operation/pull/7 https://github.c
 Approved PR: https://github.com/remla24-team-1/app/pull/8
 
 -- Fin: --\
-Created PR:  \
+Created PR:  https://github.com/remla24-team-1/model-training/pull/12 \
 Approved PR:  https://github.com/remla24-team-1/operation/pull/9
 
 # A4
