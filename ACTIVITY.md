@@ -78,7 +78,7 @@ Approved PR:
 # A5
 
 -- Sem: --\
-Created PR:  \
+Created PR: https://github.com/remla24-team-1/operation/pull/13 \
 Approved PR: https://github.com/remla24-team-1/operation/pull/12
 
 -- Flavio: --\
