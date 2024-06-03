@@ -90,5 +90,5 @@ Created PR:  https://github.com/remla24-team-1/operation/pull/12 \
 Approved PR: https://github.com/remla24-team-1/model-training/pull/16
 
 -- Fin: --\
-Created PR:  \
+Created PR:  https://github.com/remla24-team-1/operation/pull/14 \
 Approved PR: https://github.com/remla24-team-1/operation/pull/13
