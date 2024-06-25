@@ -1,32 +1,85 @@
 ---
  # Add all to common group, which will execute playbook in roles/common/tasks/main.yml automatically
-- hosts: all
-  become: yes
-  roles:
-  - common
 
 # If it is part of the nodes ansible group, the VM will execute stuff in the roles/nodes
-- hosts: nodes
-  become: true
-  roles:
-   - nodes
-  
-# Same but for the controller 
-- hosts: controllers
-  become: yes
-  roles:
-   - controllers
 
+- name: Move helm chart to controller
+  hosts: controller
+  tasks:
+    - name: Copy directory
+      copy: 
+        src: helm-chart
+        dest: /home/vagrant/
+        mode: 0755
+        owner: vagrant
+- name: Install helm, k3s
+  hosts: controller
+  tasks:
+    - name: Install helm
+      shell: |
+        curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+        sudo apt-get install apt-transport-https --yes
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+        sudo apt-get update
+        sudo apt-get install helm
+    - name: Installing k3s
+      shell: |
+        curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik --write-kubeconfig-mode=644 --node-external-ip 192.168.56.3 --flannel-external-ip 192.168.56.3" sh -
+    - name: Add config to path
+      shell: |
+        export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+    - name: Get k3s token
+      command: sudo cat /var/lib/rancher/k3s/server/node-token
+      register: K3STOKEN
 
-#- name: JOIN controller command
-#  hosts: controller
-#  tasks:
-#    - name: Export the kubeadm join command for nodes
-#      command: kubeadm token create --print-join-command
-#      register: join_command_output
+    - name: Get localhost usr
+      set_fact:
+        playbook_user: "{{ lookup('env', 'USER')}}"
 
-#- name: JOIN node command
-#  hosts: nodes
-#  tasks:
-#    - name: JOIN
-#      command: "{{ join_command_output.stdout }}"
+    - name: Write token to file
+      copy:
+        content: "{{ K3STOKEN.stdout }}"
+        dest: /tmp/k3stoken.txt
+      delegate_to: localhost
+      become_user: "{{ playbook_user }}" 
+    
+    - name: Download istioctl
+      shell: |
+        curl -L https://istio.io/downloadIstio | sh -
+
+    - name: Install Istio through helm
+      shell: |
+        helm repo add istio https://istio-release.storage.googleapis.com/charts
+        helm repo update
+        export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+        kubectl create namespace istio-system
+        helm upgrade --install istio-base istio/base -n istio-system
+        helm upgrade --install istiod istio/istiod -n istio-system
+        helm upgrade --install istio-ingressgateway istio/gateway -n istio-system
+
+    - name: Label namespace for istio injection
+      command: kubectl label namespace default istio-injection=enabled
+
+    - name: Deploy the helm chart
+      command: helm install url-phishing-checker helm-chart --kubeconfig /etc/rancher/k3s/k3s.yaml
+
+- name: Install K3S and join on nodes
+  hosts: nodes
+  tasks:
+    - name: Get localhost user
+      set_fact:
+        playbook_user: "{{ lookup('env', 'USER')}}"
+    - name: Get token from file
+      slurp:
+        src: "/tmp/k3stoken.txt"
+      delegate_to: localhost
+      become_user: "{{ playbook_user }}"
+      register: k3stokenencoded
+
+    - name: Decode token
+      set_fact:
+        decoded_token: "{{ k3stokenencoded.content | b64decode }}"
+    
+    - name: Install and join
+      shell: |
+        curl -sfL https://get.k3s.io | K3S_URL=https://192.168.56.3:6443 K3S_TOKEN={{ decoded_token }} sh -

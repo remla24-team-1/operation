@@ -1,12 +1,12 @@
 Vagrant.configure("2") do |config|
 
-  CONTROLLER_CPUS = 2
-  CONTROLLER_MEMORY = 2048
+  CONTROLLER_CPUS = 4
+  CONTROLLER_MEMORY = 6144
 
-  NODES_CPUS = 2
-  NODES_MEMORY = 2048
+  NODES_CPUS = 4
+  NODES_MEMORY = 4096
 
-  NUM_NODES = 2
+  NUM_NODES = 1
 
   STARTING_IP = 3
 
@@ -18,22 +18,8 @@ Vagrant.configure("2") do |config|
       v.cpus    = CONTROLLER_CPUS
       v.memory  = CONTROLLER_MEMORY
     end
-    controller.vm.network "private_network", ip: "192.168.56.#{STARTING_IP}", virtualbox__intnet: true
-
-    controller.vm.provider "virtualbox" do |vb|
-      vb.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]   
-    end
-    #controller.vm.provision "ansible" do |ansible|
-    #  ansible.groups = {
-    #    "node" => [],
-    #    "controllers" => ["controller"]
-    #  }
-    #  ansible.extra_vars = {
-    #    "controller_ip" => "192.168.56.#{STARTING_IP}"
-    #  }
-    #  ansible.playbook = "provision.yml"
-    #end
-  
+    controller.vm.network "private_network", ip: "192.168.56.#{STARTING_IP}"
+    
   end
   
   # Define the nodes
@@ -47,23 +33,7 @@ Vagrant.configure("2") do |config|
         v.memory = NODES_MEMORY
       end
       node_ip = "192.168.56.#{STARTING_IP + i}"
-      node.vm.network "private_network", ip: node_ip, virtualbox__intnet: true
-      node.vm.provider "virtualbox" do |vb|
-        vb.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]   
-      end
-
-      # ANSIBLE - NODE SETUP AND DYNAMIC INVENTORY GENERATION
-      #node.vm.provision "ansible" do |ansible|
-      #  
-      #  ansible.groups = {
-      #    "node" => ["node#{i}"]
-      #  }
-      #  ansible.extra_vars = {
-      #    "node_ip" => node_ip
-      #  }
-      #  ansible.playbook = "provision.yml"
-      #end
-
+      node.vm.network "private_network", ip: node_ip
 
     end
   end
@@ -78,13 +48,5 @@ Vagrant.configure("2") do |config|
     }
     ansible.playbook = "provision.yml"
   end
-
-  #config.vm.provision "ansible" do |ansible|
-  #  ansible.groups = {
-  #    "nodes" => nodes,
-  #    "controller" => ["controller"]
-  #  }
-  #  ansible.playbook = "join_cluster.yml"
-  #end
 
 end 
