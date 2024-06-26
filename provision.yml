@@ -63,6 +63,15 @@
     - name: Deploy the helm chart
       command: helm install url-phishing-checker helm-chart --kubeconfig /etc/rancher/k3s/k3s.yaml
 
+    - name: Add prometheus and grafana
+      shell: | 
+        helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+        helm repo add grafana https://grafana.github.io/helm-charts
+        helm repo update
+        helm install prometheus prometheus-community/prometheus --kubeconfig /etc/rancher/k3s/k3s.yaml
+        helm install grafana grafana/grafana --kubeconfig /etc/rancher/k3s/k3s.yaml
+
+
 - name: Install K3S and join on nodes
   hosts: nodes
   tasks:

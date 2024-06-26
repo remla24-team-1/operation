@@ -4,7 +4,7 @@ Vagrant.configure("2") do |config|
   CONTROLLER_MEMORY = 6144
 
   NODES_CPUS = 4
-  NODES_MEMORY = 4096
+  NODES_MEMORY = 6144
 
   NUM_NODES = 1
 
