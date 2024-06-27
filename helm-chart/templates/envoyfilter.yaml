@@ -29,15 +29,15 @@ spec:
               runtime_key: local_rate_limit_enabled
               default_value:
                 numerator: 100
-                denominator: HUNDRED
+                denominator: 100
             filter_enforced:
               runtime_key: local_rate_limit_enforced
               default_value:
                 numerator: 100
-                denominator: HUNDRED
+                denominator: 100
             response_headers_to_add:
               - append: false
                 header:
-                  key: "x-local-rate-limit"
+                  key: "blocked"
                   value: "true"
             local_rate_limit_per_downstream_connection: true
