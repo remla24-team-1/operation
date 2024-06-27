@@ -64,16 +64,16 @@ Created PR: https://github.com/remla24-team-1/model-training/pull/13 \
 Approved PR: https://github.com/remla24-team-1/model-training/pull/11
 
 -- Flavio: --\
-Created PR: \
-Approved PR:
+Created PR: https://github.com/remla24-team-1/model-training/pull/14 \
+Approved PR: https://github.com/remla24-team-1/model-training/pull/12 \
 
 -- Erik: --\
 Created PR:  https://github.com/remla24-team-1/model-training/pull/11 \
 Approved PR: https://github.com/remla24-team-1/model-training/pull/13
 
 -- Fin: --\
-Created PR:  \
-Approved PR: 
+Created PR:  https://github.com/remla24-team-1/operation/pull/17\
+Approved PR: https://github.com/remla24-team-1/model-training/pull/19
 
 # A5
 
@@ -82,8 +82,8 @@ Created PR: https://github.com/remla24-team-1/operation/pull/13 \
 Approved PR: https://github.com/remla24-team-1/operation/pull/12
 
 -- Flavio: --\
-Created PR: \
-Approved PR:
+Created PR:  https://github.com/remla24-team-1/app/pull/9 \
+Approved PR: https://github.com/remla24-team-1/operation/pull/14 \
 
 -- Erik: --\
 Created PR:  https://github.com/remla24-team-1/operation/pull/12 \
