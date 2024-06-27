@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: config-map
 data:
-  MODEL_SERVICE_URL: "http://model-service-service:8081/querymodel"
+  MODEL_SERVICE_URL: "http://model-service-service:8081"
